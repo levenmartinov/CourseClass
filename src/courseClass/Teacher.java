@@ -9,9 +9,20 @@ public class Teacher extends Person{
         this.branch = branch;
     }
 
+    public String getBranch() {
+        return branch;
+    }
+
     @Override
     public void printInfo() {
         System.out.println("Teacher: " + this.name + ", Baranch: " + this.branch);
     }
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "name='" + name + '\'' +
+                ", branch='" + branch + '\'' +
+                '}';
+    }
 }
