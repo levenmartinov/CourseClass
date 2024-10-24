@@ -1,34 +1,102 @@
 package courseClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Student extends Person {
+
     private String stuNo;
-    private Course course1;
-    private Course course2;
-    private Course course3;
+    private List<Course> courses; //Dinamik ders listesi
     private double average;
     private boolean isPass;
 
+
     // Constructor
-    public Student(String name, String stuNo, Course course1, Course course2, Course course3) {
-        super(name);  // Person'dan gelen name alanını kullanıyoruz
+    public Student(String name, String stuNo) {
+        super(name);
         this.stuNo = stuNo;
-        this.course1 = course1;
-        this.course2 = course2;
-        this.course3 = course3;
+        this.courses = new ArrayList<>();
         this.isPass = false;
     }
 
 
-    // Notları topluca ekler ve exception handling
-    public void addBulkExamNote(int exam1, int verbal1, int exam2, int verbal2, int exam3, int verbal3) {
-        try {
-            this.course1.addNotes(exam1, verbal1);
-            this.course2.addNotes(exam2, verbal2);
-            this.course3.addNotes(exam3, verbal3);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid note entry: " + e.getMessage());
+    public String getStuNo() {
+        return stuNo;
+    }
+
+    public void setStuNo(String stuNo) {
+        this.stuNo = stuNo;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public double getAverage() {
+        return average;
+    }
+
+    public boolean isPass() {
+        return isPass;
+    }
+
+
+
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
+
+
+    public void removeCourse(String courseCode) {
+        courses.removeIf(course -> course.getCode().equalsIgnoreCase(courseCode));
+    }
+
+
+    public void addBulkExamNote (int[] examNotes, int[] verbalNotes) {
+
+        if (examNotes.length != courses.size() || verbalNotes.length != courses.size()) {
+            throw new IllegalArgumentException("The number of exam and verbal notes must match the number of courses.");
+        }
+
+        for (int i = 0; i < courses.size(); i++) {
+            courses.get(i).addNotes(examNotes[i], verbalNotes[i]);
+        }
+
+    }
+
+
+    public void calcAverage() {
+        average = courses.stream().
+                mapToDouble(Course::calculateCourseAverage).
+                average().
+                orElse(0);
+    }
+
+
+
+
+    public void checkPass() {
+        calcAverage();
+        if (average >= 55) {
+            System.out.println(this.getName() + " has passed.");
+            isPass = true;
+        } else {
+            System.out.println(this.getName() + " has failed.");
+            isPass =false;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Ortalama hesaplar
     public void calcAverage() {

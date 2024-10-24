@@ -7,8 +7,8 @@ public class Course implements CourseActions {
     private String prefix;
     private int examNote;
     private int verbalNote;
-    private double examWeight;
-    private double verbalWeight;
+    private double examWeight;  // Sınav ağırlığı
+    private double verbalWeight;  // Sözlü ağırlığı
     private Teacher teacher;
 
     public Course(String name, String code, String prefix, double examWeight, double verbalWeight) {
@@ -17,8 +17,34 @@ public class Course implements CourseActions {
         this.prefix = prefix;
         this.examWeight = examWeight;
         this.verbalWeight = verbalWeight;
-        this.examNote = 0;
-        this.verbalNote = 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public int getExamNote() {
+        return examNote;
+    }
+
+    public int getVerbalNote() {
+        return verbalNote;
+    }
+
+    public double getExamWeight() {
+        return examWeight;
+    }
+
+    public double getVerbalWeight() {
+        return verbalWeight;
     }
 
 
