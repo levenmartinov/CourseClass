@@ -2,7 +2,7 @@ package courseClass;
 
 public abstract class Person {
 
-    String name;
+    private String name;
 
     public Person(String name) {
         this.name = name;
@@ -12,13 +12,12 @@ public abstract class Person {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Abstract method
     public abstract void printInfo();
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                '}';
-    }
 
 }
