@@ -2,6 +2,7 @@ package courseClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Student extends Person {
 
@@ -67,12 +68,11 @@ public class Student extends Person {
 
     public void calcAverage() {
         average = courses.stream().
-                mapToDouble(Course::calculateCourseAverage).
-                average().
-                orElse(0);
+                mapToDouble(Course::calculateCourseAverage). //Buradaki :: işareti, Java'da bir metod referansı
+                average().                                   // oluşturmanın bir yoludur. Yani, Course sınıfındaki bir
+                orElse(0);                             //metodu doğrudan çağırmadan, onun referansını kullanarak akışın her elemanında uygulamak anlamına gelir.
+
     }
-
-
 
 
     public void checkPass() {
@@ -87,51 +87,22 @@ public class Student extends Person {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-    // Ortalama hesaplar
-    public void calcAverage() {
-        double average1 = this.course1.calculateCourseAverage();
-        double average2 = this.course2.calculateCourseAverage();
-        double average3 = this.course3.calculateCourseAverage();
-        this.average = (average1 + average2 + average3) / 3.0;
-    }
-
-    // Geçip geçmediğini kontrol eder
-    public void checkPass() {
-        calcAverage();
-        if (this.average >= 55) {
-            System.out.println(this.getName() + " has passed.");
-            this.isPass = true;
-        } else {
-            System.out.println(this.getName() + " has failed.");
-            this.isPass = false;
-        }
-    }
-
-    // Person abstract class'ındaki printInfo() metodunu override etme
     @Override
     public void printInfo() {
-        System.out.println("Student Name: " + this.getName());
-        System.out.println("Student Number: " + this.stuNo);
-        System.out.println("Average: " + this.average);
-        System.out.println("Pass Status: " + (this.isPass ? "Passed" : "Failed"));
+
+        System.out.println("Student name : " + getName());
+        System.out.println("Student number : " + getStuNo());
+        System.out.println("Courses : " + courses.stream().map(Course :: getName).collect(Collectors.joining(", "))); //Collectors.joining(", ") kısmı, akıştaki elemanları birleştiren bir toplayıcıdır. Bu toplayıcı, akıştaki her bir elemanı birleştirirken, elemanlar arasına belirtilen ayırıcıyı (bu örnekte virgül ve boşluk) ekler.
+        System.out.println("Average : " + average);
+        System.out.println("Pass Status : " + (isPass ? "Passed" : "Failed"));
+
     }
 
     @Override
     public String toString() {
         return "Student{" +
                 "name='" + getName() + '\'' +
-                ", stuNo='" + stuNo + '\'' +
+                "stuNo='" + stuNo + '\'' +
                 ", average=" + average +
                 ", isPass=" + isPass +
                 '}';

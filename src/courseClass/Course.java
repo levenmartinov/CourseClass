@@ -47,40 +47,30 @@ public class Course implements CourseActions {
         return verbalWeight;
     }
 
-
-    //Ogretmen eklemek icin
-
-    public void addTeacher (Teacher teacher) {
-
+    public void setTeacher(Teacher teacher) {
         if (teacher.getBranch().equals(this.prefix)) {
             this.teacher = teacher;
-            System.out.println("Teacher assigned successfully to " + this.name);
         } else {
-            System.out.println("Teacher branch does not match the course.");
+            System.out.println("Teacher's branch does not much the course prefix");
         }
-
     }
 
-    //Notlari eklemek icin interface'den implementasyon yapiyoz
+    public Teacher getTeacher() {
+        return teacher;
+    }
 
-
-    @Override
     public void addNotes(int examNote, int verbalNote) {
 
-        if (examNote < 0 || examNote > 100 || verbalNote < 0 || verbalNote > 100) {
-            throw new IllegalArgumentException("Notes must be be between 0 and 100.");
+        if (examNote < 0 || examNote > 100 || verbalNote < 0 || verbalNote > 100 ) {
+            throw new IllegalArgumentException("Invalid note entry. Notes must be between 0 and 100.");
         }
         this.examNote = examNote;
         this.verbalNote = verbalNote;
-
     }
 
-    //Ortalamalari eklemek icin interface'den implementasyon yapiyoz
     @Override
     public double calculateCourseAverage() {
-
-        return (this.examNote * this.examWeight) + (this.verbalNote * this.verbalWeight);
-
+        return (examNote * examWeight) + ( verbalNote * verbalWeight);
     }
 
     @Override
@@ -91,7 +81,10 @@ public class Course implements CourseActions {
                 ", prefix='" + prefix + '\'' +
                 ", examNote=" + examNote +
                 ", verbalNote=" + verbalNote +
-                ", teacher=" + teacher +
+                ", examWeight=" + examWeight +
+                ", verbalWeight=" + verbalWeight +
                 '}';
     }
+
+
 }
